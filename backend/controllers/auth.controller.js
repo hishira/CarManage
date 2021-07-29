@@ -1,13 +1,10 @@
 const userModel = require("../models/User.model");
 const { generateTokens } = require("../utils/jwt.utils")
-export class AuthController {
+class AuthController {
     static async SignUp(req, res) {
         try {
-            let fullname = req.body.name + " " + req.body.lastname
-            if (req.body.password === "" || req.body.email === "")
-                return res.status(406).send({ message: "Email or password required" })
             let user = new userModel({
-                fullname: fullname,
+                fullname: req.body.fullname,
                 email: req.body.email,
                 password: req.body.password,
             })
@@ -18,3 +15,5 @@ export class AuthController {
         }
     }
 }
+
+module.exports = AuthController;
