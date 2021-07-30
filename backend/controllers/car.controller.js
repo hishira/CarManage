@@ -73,5 +73,15 @@ class CarController {
       return res.status(505).send({ message: "Server error" });
     }
   }
+  static async GetByUser(req, res) {
+    try {
+      const cars = await carModel.find({ user: req.userid }).catch((e) => {
+        return res.status(406).send({ message: "Error while car fetching" });
+      });
+      return res.status(200).json(cars);
+    } catch (e) {
+      return res.status(505).send({ message: "Server error" });
+    }
+  }
 }
 module.exports = CarController;

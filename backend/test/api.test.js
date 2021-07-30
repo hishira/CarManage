@@ -521,6 +521,51 @@ describe("API tests", () => {
           });
       });
     });
+    describe("Car get by user",()=>{
+      it("We cannot get cars if we are unauthorized", (done) => {
+        chai
+          .request(app)
+          .get(`/car/cars`)
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We cannot authorize withour Bearer", (done) => {
+        chai
+          .request(app)
+          .get(`/car/cars`)
+          .set({ Authorization: `${token.refreshtoken}` })
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We cannot authorize with wrong token", (done) => {
+        chai
+          .request(app)
+          .get(`/car/cars`)
+          .set({ Authorization: `Bearer 12h12kj3123j1h2k3jhk23` })
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We can get cars if everything is ok", (done) => {
+        chai
+          .request(app)
+          .get(`/car/cars`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.an("array");
+            done();
+          });
+      });
+    })
   });
   after(async () => {
     await userModel.deleteMany({});
