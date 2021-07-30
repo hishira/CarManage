@@ -1,7 +1,7 @@
 const carModel = require("../models/Car.model");
 
 class CarController{
-    async static Create(req,res){
+    static async Create(req,res){
         try{
             const newcar = new carModel({
                 producer: req.body.producer,
@@ -9,6 +9,7 @@ class CarController{
                 year: req.body.year,
                 companyintrodate: req.body.companyintrodate,
                 actualrun: req.body.actualrun,
+                user: req.userid,
             });
             await newcar.save().catch(e=>{
                 return res.status(406).send({message: "Error while adding new car"})
@@ -16,7 +17,7 @@ class CarController{
             return res.status(200).json(newcar);
         }catch(e){return res.status(505).send({message: "Server error"})}
     }
-    async static Edit(req,res){
+    static async Edit(req,res){
         try{
             let objstat = await carModel.findOneAndUpdate({_id:req.params.id},{
                 $set:{producer: req.body.producer,
@@ -36,7 +37,7 @@ class CarController{
             return res.status(objstat.status).json(objstat.updatedcar) 
         }catch(e){return res.status(505).send({message: "Server error"})}
     }
-    async static Delete(req,res){
+    static async Delete(req,res){
         try{
             await carModel.deleteOne({_id: req.params.id},(err,doc)=>{
                 if(err || doc.deletedCount === 0)

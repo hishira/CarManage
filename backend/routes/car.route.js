@@ -1,7 +1,30 @@
 const express = require("express");
 const CarController = require("../controllers/car.controller");
 const app = express();
-app.post("/create", CarController.Create);
-app.put("/edit/:id", CarController.Edit)
-app.delete("/delete/:id", CarController.Delete)
+const {
+  checkBearerTokenHeader,
+  checkheadAuthorization,
+  accessTokenCheck,
+} = require("../middleware/jwtcheck");
+app.post(
+  "/create",
+  checkheadAuthorization,
+  checkBearerTokenHeader,
+  accessTokenCheck,
+  CarController.Create
+);
+app.put(
+  "/edit/:id",
+  checkheadAuthorization,
+  checkBearerTokenHeader,
+  accessTokenCheck,
+  CarController.Edit
+);
+app.delete(
+  "/delete/:id",
+  checkheadAuthorization,
+  checkBearerTokenHeader,
+  accessTokenCheck,
+  CarController.Delete
+);
 module.exports = app;
