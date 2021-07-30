@@ -1,5 +1,6 @@
 const express = require("express");
 const CarController = require("../controllers/car.controller");
+const {valididcheck} = require("../middleware/car");
 const app = express();
 const {
   checkBearerTokenHeader,
@@ -18,6 +19,7 @@ app.put(
   checkheadAuthorization,
   checkBearerTokenHeader,
   accessTokenCheck,
+  valididcheck,
   CarController.Edit
 );
 app.delete(
@@ -25,6 +27,7 @@ app.delete(
   checkheadAuthorization,
   checkBearerTokenHeader,
   accessTokenCheck,
+  valididcheck,
   CarController.Delete
 );
 module.exports = app;

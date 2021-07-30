@@ -12,6 +12,9 @@ const carSchema = new mongoose.Schema({
         type: Number,
         min: 1900,
         required: true,
+        validate(value){
+            return value <= new Date(Date.now()).getFullYear()
+        }
     },
     companyintrodate: {
         type: Date,
