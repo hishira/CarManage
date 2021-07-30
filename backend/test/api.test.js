@@ -465,6 +465,62 @@ describe("API tests", () => {
           });
       });
     });
+    describe("Car delete", () => {
+      it("We cannot delete car if we are unauthorized", (done) => {
+        chai
+          .request(app)
+          .delete(`/car/delete/${car.carid}`)
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We cannot authorize withour Bearer", (done) => {
+        chai
+          .request(app)
+          .delete(`/car/delete/${car.carid}`)
+          .set({ Authorization: `${token.refreshtoken}` })
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We cannot authorize with wrong token", (done) => {
+        chai
+          .request(app)
+          .delete(`/car/delete/${car.carid}`)
+          .set({ Authorization: `Bearer 12h12kj3123j1h2k3jhk23` })
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We cannot delete car with invalid _id", (done) => {
+        chai
+          .request(app)
+          .delete(`/car/delete/j1l23j1kl23jlk12j3`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .end((err, res) => {
+            res.should.have.status(406);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+      it("We can delete car if evrything is ok", (done) => {
+        chai
+          .request(app)
+          .delete(`/car/delete/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property("message");
+            done();
+          });
+      });
+    });
   });
   after(async () => {
     await userModel.deleteMany({});
