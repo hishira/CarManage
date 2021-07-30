@@ -20,7 +20,7 @@ function refreshAccessToken(user){
 function generateTokens(user){
     return {
         accessToken: generateaccesstoken(user),
-        refreshtoken: generaterefreshtoken(user),
+        refreshToken: generaterefreshtoken(user),
     }
 }
 module.exports = {

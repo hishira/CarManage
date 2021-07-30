@@ -4,6 +4,7 @@ const chai = require("chai");
 const chaihttp = require("chai-http");
 const userModel = require("../models/User.model");
 const should = chai.should();
+const token = { refreshtoken: "" };
 chai.use(chaihttp);
 describe("API tests", () => {
   before(() => {});
@@ -59,6 +60,8 @@ describe("API tests", () => {
         })
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.have.property("accessToken");
+          res.body.should.have.property("refreshToken");
           done();
         });
     });
@@ -79,9 +82,32 @@ describe("API tests", () => {
         .send({ email: "mail@mail.com", password: "123d123" })
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.have.property("accessToken");
+          token.refreshtoken = res.body.refreshToken;
+          res.body.should.have.property("refreshToken");
           done();
         });
     });
+    it("We cannot refresh access token with wrong refreshtoken", (done) => {
+      chai
+        .request(app)
+        .get("/auth/refreshtoken")
+        .set({ Authorization: "Bearer 123j123j1kl2j31kl2j3d" })
+        .end((err,res)=>{
+          res.should.have.status(401);
+          res.body.should.have.property("message");
+          done();
+        })
+    });
+    it("We can refresh access token with good refresh token",(done)=>{
+      chai.request(app).get("/auth/refreshtoken")
+      .set({Authorization: `Bearer ${token.refreshtoken}`})
+      .end((err,res)=>{
+        res.should.have.status(200);
+        res.body.should.have.property("accessToken");
+        done();
+      })
+    })
   });
   after(async () => {
     await userModel.deleteMany({});

@@ -1,5 +1,6 @@
 const userModel = require("../models/User.model");
-const { generateTokens } = require("../utils/jwt.utils")
+const { generateTokens, refreshAccessToken } = require("../utils/jwt.utils");
+const SERVERERROR = "Server error"
 class AuthController {
     static async SignUp(req, res) {
         try {
@@ -13,7 +14,7 @@ class AuthController {
             });
             return res.status(200).send(generateTokens(user))
         } catch (e) {
-            return res.status(505).send({ message: "Server error" });
+            return res.status(505).send({ message: SERVERERROR });
         }
     }
     static async Login(req,res){
@@ -33,8 +34,15 @@ class AuthController {
                 return res.status(406).send({message: "User do not exists"});
             return res.status(200).json(tokenorerror)
         }catch(e){
-            console.log(e);
-            return res.status(505).send({message: "Server error"})
+            return res.status(505).send({message: SERVERERROR})
+        }
+    }
+    static async RefreshToken(req,res){
+        try{
+            let accesstoken = refreshAccessToken(req.userid);
+            return res.status(200).json(accesstoken);
+        }catch(e){
+            return res.status(505).send({message: SERVERERROR})
         }
     }
 }

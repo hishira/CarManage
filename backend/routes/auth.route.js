@@ -6,6 +6,7 @@ const {
   emailcheck,
   userpasswordsequencecheck,
 } = require("../middleware/auth");
+const {refreshtokenVerify} = require("../middleware/jwtcheck");
 app.post(
   "/signup",
   emailcheck,
@@ -14,5 +15,5 @@ app.post(
   AuthController.SignUp
 );
 app.post("/login",emailcheck, AuthController.Login);
-
+app.get("/refreshtoken", refreshtokenVerify,AuthController.RefreshToken)
 module.exports = app;
