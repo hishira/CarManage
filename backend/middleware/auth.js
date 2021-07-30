@@ -3,15 +3,21 @@ function userpasswordcheck(req,res,next){
         return res.status(406).send({message: "Enter password"});
     next();
 }
+function userpasswordsequencecheck(req,res,next){
+    /*Regex add*/
+    if(req.body.password.length >= 6)
+        next();
+    else
+        return res.status(406).send({message: "Invalid password"});
+}
 function emailcheck(req,res,next){
     if(req.body.email === "" || req.body.email === undefined)
         return res.status(406).send({message: "Enter email"});
-    else if(req.body.email.length > 255)
-        return res.status(406).send({message: "Email to long"});
     next();
 }
 
 module.exports = {
     userpasswordcheck,
     emailcheck,
+    userpasswordsequencecheck,
 }
