@@ -39,9 +39,9 @@ const Button = styled.button`
 export default function StartComponent() {
   const history = useHistory();
   useEffect(() => {
-    const item = JSON.parse(localStorage.getItem("user"));
+    const item = JSON.parse(localStorage.getItem("useractive"));
     console.log(item);
-    if (item !== null) history.push("/store");
+    if (item !== null) history.push("/cars");
   });
   return (
     <MainComponent>

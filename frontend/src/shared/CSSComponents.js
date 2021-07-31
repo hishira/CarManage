@@ -34,3 +34,17 @@ export const InputComponent = styled.div`
 `;
 export const Label = styled.label``;
 export const Input = styled.input``;
+export const Button = styled.button`
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  width: 10rem;
+  border: 0.1rem solid slategray;
+  font-size: 1.1rem;
+  &:last-child {
+    margin-top: 1rem;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #fca311;
+  }
+`;

@@ -2,6 +2,16 @@ const carModel = require("../models/Car.model");
 class CarController {
   static async Create(req, res) {
     try {
+      if (
+        new Date(req.body.companyintrodate) > new Date(Date.now()) ||
+        new Date(req.body.companyintrodate).getFullYear() < 1970
+      )
+        return res
+          .status(404)
+          .send({
+            message:
+              "Invalid intro date into company, must be bettwen 1970 and now",
+          });
       const newcar = new carModel({
         producer: req.body.producer,
         model: req.body.model,
