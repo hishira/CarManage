@@ -8,14 +8,14 @@ import {
   Label,
   Input,
 } from "../../shared/CSSComponents";
-import { loginuserHandle } from "../../utils/auth.utils";
-const WrappLogin = styled(MainComponent)`
+import { signupuserHandle } from "../../utils/auth.utils";
+const WrappSigpUp = styled(MainComponent)`
   width: 100%;
   @media (min-width: 500px) {
     width: 50%;
   }
 `;
-const LoginForm = styled.form`
+const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,46 +34,69 @@ const SignUpLink = styled.span`
 `;
 
 const Button = styled.button``;
-export default function LoginComponent() {
+export default function SignUpComponent() {
+  const [fullname, setfullname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const history = useHistory();
   const sumbithandle = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    console.log(fullname,email, password);
     const emailpassobject = {
+      fullname: fullname,
       email: email,
       password: password,
     };
-    const loginresponse = await loginuserHandle(emailpassobject);
-    console.log(loginresponse);
+    const loginresponse = await signupuserHandle(emailpassobject);
+    if(loginresponse.status !== 200){
+        console.log(loginresponse.fetchinfo)
+    }else{
+
+        console.log(loginresponse)
+    }
+    
   };
   return (
     <MainComponent>
-      <WrappLogin>
-        <MainText>Login</MainText>
-        <LoginForm onSubmit={sumbithandle}>
+      <WrappSigpUp>
+        <MainText>Sign Up</MainText>
+        <SignUpForm onSubmit={sumbithandle}>
+          <InputComponent>
+            <Label>Full name</Label>
+            <Input
+              type="text"
+              required
+              placeholder="Full name"
+              onChange={(e) => setfullname(e.target.value)}
+            />
+          </InputComponent>
           <InputComponent>
             <Label>Email</Label>
-            <Input type="email" onChange={(e) => setemail(e.target.value)} />
+            <Input
+              required
+              type="email"
+              placeholder="email"
+              onChange={(e) => setemail(e.target.value)}
+            />
           </InputComponent>
           <InputComponent>
             <Label>Password</Label>
             <Input
+              required
               type="password"
               placeholder="******"
               onChange={(e) => setpassword(e.target.value)}
             />
           </InputComponent>
           <SignUpText>
-            Do not have account?{" "}
-            <SignUpLink onClick={() => history.push("/signup")}>
-              Sign up
+            Do you have account?{" "}
+            <SignUpLink onClick={() => history.push("/login")}>
+              Log in
             </SignUpLink>
           </SignUpText>
-          <Button type="submit">Login</Button>
-        </LoginForm>
-      </WrappLogin>
+          <Button type="submit">Sign up</Button>
+        </SignUpForm>
+      </WrappSigpUp>
     </MainComponent>
   );
 }

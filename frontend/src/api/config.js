@@ -9,6 +9,7 @@ const getFetchObjectWithAuth = (token) => {
       "Content-Type": "application/json",
       Accept: "application/json",
       authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "http://localhost:3000",
     },
   };
 };
@@ -20,6 +21,7 @@ const postFetchObjectWithAuth = (token, object) => {
       "Content-Type": "application/json",
       Accept: "application/json",
       authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "http://localhost:3000",
     },
     body: JSON.stringify(object),
   };
@@ -32,6 +34,7 @@ const putFetchObjectWithAuth = (token, object) => {
       "Content-Type": "application/json",
       Accept: "application/json",
       authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "http://localhost:3000",
     },
     body: JSON.stringify(object),
   };
@@ -44,6 +47,7 @@ const deleteFetchObjectWithAuth = (token) => {
       "Content-Type": "application/json",
       Accept: "application/json",
       authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "http://localhost:3000",
     },
   };
 };
@@ -54,6 +58,7 @@ const postFetchObject = (object) => {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      "Access-Control-Allow-Origin": "http://localhost:3000",
     },
     body: JSON.stringify(object),
   };

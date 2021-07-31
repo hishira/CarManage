@@ -11,6 +11,7 @@ export const MainComponent = styled.div`
 `;
 export const MainText = styled.p`
   font-size: 2.7rem;
+  letter-spacing: .4rem;
   @media (min-width: 500px) {
     font-size: 1.7rem;
     padding: 0rem 3rem;
@@ -27,3 +28,9 @@ export const MainText = styled.p`
   width: 100%;
   text-align: center;
 `;
+export const InputComponent = styled.div`
+  display: flex;
+  width: 100%;
+`;
+export const Label = styled.label``;
+export const Input = styled.input``;

@@ -6,7 +6,12 @@ const {
   emailcheck,
   userpasswordsequencecheck,
 } = require("../middleware/auth");
-const {refreshtokenVerify, checkheadAuthorization,checkBearerTokenHeader} = require("../middleware/jwtcheck");
+const {
+  refreshtokenVerify,
+  checkheadAuthorization,
+  checkBearerTokenHeader,
+} = require("../middleware/jwtcheck");
+
 app.post(
   "/signup",
   emailcheck,
@@ -14,6 +19,12 @@ app.post(
   userpasswordsequencecheck,
   AuthController.SignUp
 );
-app.post("/login",emailcheck, AuthController.Login);
-app.get("/refreshtoken", checkheadAuthorization,checkBearerTokenHeader,refreshtokenVerify,AuthController.RefreshToken)
+app.post("/login", emailcheck, AuthController.Login);
+app.get(
+  "/refreshtoken",
+  checkheadAuthorization,
+  checkBearerTokenHeader,
+  refreshtokenVerify,
+  AuthController.RefreshToken
+);
 module.exports = app;

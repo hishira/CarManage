@@ -8,7 +8,7 @@ function userpasswordsequencecheck(req,res,next){
     if(req.body.password.length >= 6)
         next();
     else
-        return res.status(406).send({message: "Invalid password"});
+        return res.status(406).send({message: "Password to short, min 6 char"});
 }
 function emailcheck(req,res,next){
     if(req.body.email === "" || req.body.email === undefined)
