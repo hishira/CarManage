@@ -37,4 +37,11 @@ app.get(
   accessTokenCheck,
   CarController.GetByUser
 );
+app.get(
+  "/carinfo/:id",
+  checkheadAuthorization,
+  checkBearerTokenHeader,
+  accessTokenCheck,
+  CarController.GetCar
+);
 module.exports = app;

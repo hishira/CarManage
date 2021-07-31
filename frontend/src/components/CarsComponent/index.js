@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GetUserCars, DeleteCarHandle } from "../../utils/car.util";
+import { GetUserCars } from "../../utils/car.util";
 import { GetUserInfoHandle } from "../../utils/user.util";
 import { useHistory } from "react-router-dom";
 import {
@@ -10,9 +10,10 @@ import {
   Label,
   Input,
   Button,
+  Spinner
 } from "../../shared/CSSComponents";
 import { Message } from "../../shared/Message";
-
+import { CarComponent } from "./CarComponent";
 const CarsWrapper = styled(MainComponent)`
   width: 100%;
   position: relative;
@@ -20,59 +21,11 @@ const CarsWrapper = styled(MainComponent)`
     width: 50%;
   }
 `;
-const Spinner = styled.div`
-  position: absolute;
-  width: 2rem;
-  height: 2rem;
-  border: 1rem solid #14213d;
-  border-radius: 50%;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  border-top-color: transparent;
-  margin-top: 10rem;
-  animation: rotate 1.2s ease-in-out infinite;
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-`;
-const CarButtonGroup = styled.div`
-  display: flex;
-`;
-const CarButton = styled.button``;
+
+
 const Cars = styled.div``;
 const UserInfo = styled.div``;
-const Car = styled.div``;
-const CarComponent = ({ car, messagefunction, reloadcars }) => {
-  const deleteButtonHandle = async (carid) => {
-    const response = await DeleteCarHandle(car._id);
-    if (response.status === 200) {
-      messagefunction("success", response.fetchobject.message);
-      setTimeout(() => reloadcars(), 2000);
-    } else {
-      messagefunction("warning", response.fetchobject.message);
-    }
-  };
-  return (
-    <Car>
-      <div>Producer {car.producer}</div>
-      <div>Model {car.model} </div>
-      <div>
-        Intro date in company{" "}
-        {new Date(car.companyintrodate).toLocaleDateString()}
-      </div>
-      <div>Actual run {car.actualrun} km</div>
-      <CarButtonGroup>
-        <CarButton>Edit</CarButton>
-        <CarButton onClick={() => deleteButtonHandle()}>Delete</CarButton>
-      </CarButtonGroup>
-    </Car>
-  );
-};
+
 export function CarsComponent() {
   const [user, setuser] = useState({});
   const [cars, setCars] = useState([]);

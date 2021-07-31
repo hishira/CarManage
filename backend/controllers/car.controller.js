@@ -6,12 +6,10 @@ class CarController {
         new Date(req.body.companyintrodate) > new Date(Date.now()) ||
         new Date(req.body.companyintrodate).getFullYear() < 1970
       )
-        return res
-          .status(404)
-          .send({
-            message:
-              "Invalid intro date into company, must be bettwen 1970 and now",
-          });
+        return res.status(404).send({
+          message:
+            "Invalid intro date into company, must be bettwen 1970 and now",
+        });
       const newcar = new carModel({
         producer: req.body.producer,
         model: req.body.model,
@@ -89,6 +87,16 @@ class CarController {
         return res.status(406).send({ message: "Error while car fetching" });
       });
       return res.status(200).json(cars);
+    } catch (e) {
+      return res.status(505).send({ message: "Server error" });
+    }
+  }
+  static async GetCar(req, res) {
+    try {
+      const car = await carModel.findById(req.params.id).catch((e) => {
+        return res.status(406).send({ message: "Error while car fetching" });
+      });
+      return res.status(200).json(car);
     } catch (e) {
       return res.status(505).send({ message: "Server error" });
     }

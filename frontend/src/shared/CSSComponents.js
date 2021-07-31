@@ -11,7 +11,7 @@ export const MainComponent = styled.div`
 `;
 export const MainText = styled.p`
   font-size: 2.7rem;
-  letter-spacing: .4rem;
+  letter-spacing: 0.4rem;
   @media (min-width: 500px) {
     font-size: 1.7rem;
     padding: 0rem 3rem;
@@ -46,5 +46,25 @@ export const Button = styled.button`
   &:hover {
     cursor: pointer;
     background-color: #fca311;
+  }
+`;
+export const Spinner = styled.div`
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border: 1rem solid #14213d;
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  margin-top: 10rem;
+  animation: rotate 1.2s ease-in-out infinite;
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;

@@ -6,6 +6,7 @@ import LoginComponent from "./components/LoginComponent";
 import SignUpComponent from "./components/SignUpComponent";
 import { CarsComponent } from "./components/CarsComponent";
 import { NewCar } from "./components/NewCar";
+import { EditCar } from "./components/EditCar";
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signup" component={SignUpComponent} />
         <PrivateRoute path="/cars" Component={CarsComponent} />
         <PrivateRoute path="/newcar" Component={NewCar} />
+        <PrivateRoute path="/editcar/:id" Component={EditCar} />
 
       </Router>
     </div>
