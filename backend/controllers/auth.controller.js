@@ -43,7 +43,8 @@ class AuthController {
   }
   static async RefreshToken(req, res) {
     try {
-      let accesstoken = refreshAccessToken(req.userid);
+      let user = await userModel.findById(req.userid);
+      let accesstoken = refreshAccessToken(user);
       return res.status(200).json(accesstoken);
     } catch (e) {
       return res.status(505).send({ message: SERVERERROR });

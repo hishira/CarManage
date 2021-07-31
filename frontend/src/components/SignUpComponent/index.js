@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { InsertNewTokens } from "../../utils/cookies";
+import { setUserActivity } from "../../utils/localstorage";
 import {
   MainComponent,
   MainText,
@@ -41,20 +43,20 @@ export default function SignUpComponent() {
   const history = useHistory();
   const sumbithandle = async (e) => {
     e.preventDefault();
-    console.log(fullname,email, password);
+    console.log(fullname, email, password);
     const emailpassobject = {
       fullname: fullname,
       email: email,
       password: password,
     };
-    const loginresponse = await signupuserHandle(emailpassobject);
-    if(loginresponse.status !== 200){
-        console.log(loginresponse.fetchinfo)
-    }else{
-
-        console.log(loginresponse)
+    const signupinfo = await signupuserHandle(emailpassobject);
+    if (signupinfo.status !== 200) {
+      console.log(signupinfo.fetchinfo);
+    } else {
+      InsertNewTokens(signupinfo.fetchinfo);
+      setUserActivity();
+      history.push("/cars");
     }
-    
   };
   return (
     <MainComponent>

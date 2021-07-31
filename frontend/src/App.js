@@ -4,6 +4,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import StartComponent from "./components/StartComponent";
 import LoginComponent from "./components/LoginComponent";
 import SignUpComponent from "./components/SignUpComponent";
+import { CarsComponent } from "./components/CarsComponent";
 function App() {
   return (
     <div className="App">
@@ -12,6 +13,7 @@ function App() {
         <Route exact path="/" component={StartComponent} />
         <Route path="/login" component={LoginComponent} />
         <Route path="/signup" component={SignUpComponent} />
+        <PrivateRoute path="/cars" Component={CarsComponent} />
       </Router>
     </div>
   );

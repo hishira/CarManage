@@ -9,6 +9,8 @@ import {
   Input,
 } from "../../shared/CSSComponents";
 import { loginuserHandle } from "../../utils/auth.utils";
+import { InsertNewTokens } from "../../utils/cookies";
+import { setUserActivity } from "../../utils/localstorage";
 const WrappLogin = styled(MainComponent)`
   width: 100%;
   @media (min-width: 500px) {
@@ -46,7 +48,13 @@ export default function LoginComponent() {
       password: password,
     };
     const loginresponse = await loginuserHandle(emailpassobject);
-    console.log(loginresponse);
+    if (loginresponse.status !== 200) {
+      console.log(loginresponse.fetchinfo);
+    } else {
+      InsertNewTokens(loginresponse.fetchinfo);
+      setUserActivity();
+      history.push("/cars");
+    }
   };
   return (
     <MainComponent>
