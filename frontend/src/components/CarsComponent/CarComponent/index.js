@@ -11,10 +11,9 @@ const CarInfoWrapper = styled.div`
 `;
 const CarButton = styled.button`
   padding: 0.6rem;
-  width: calc(50% - .002rem);
+  width: calc(50% );
   border: 0.02rem solid lightslategray;
   cursor: pointer;
-
 `;
 const EditButton = styled(CarButton)`
   color: blue;
@@ -25,17 +24,17 @@ const EditButton = styled(CarButton)`
   }
 `;
 const DeleteButton = styled(CarButton)`
-  color: #FF3333;
+  color: #ff3333;
   border-bottom-right-radius: 5px;
-  border: 0.02rem solid #FF3333;
-  &:hover{
+  border: 0.02rem solid #ff3333;
+  &:hover {
     background-color: hsl(0, 100%, 90%);
   }
 `;
 const Car = styled.div`
   width: 100%;
   border-radius: 5px;
-  box-shadow: .1rem .1rem .1rem .1rem lightslategray;
+  box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem lightslategray;
   @media (min-width: 600px) {
     width: auto;
   }
@@ -83,7 +82,10 @@ export const CarComponent = ({ car, messagefunction, reloadcars }) => {
             {new Date(car.companyintrodate).toLocaleDateString()}
           </SecondInfo>
         </CarInfo>
-        <CarInfo>Actual run {car.actualrun} km</CarInfo>
+        <CarInfo>
+          <FirstInfo>Actual run</FirstInfo>{" "}
+          <SecondInfo>{car.actualrun} km</SecondInfo>
+        </CarInfo>
       </CarInfoWrapper>
       <CarButtonGroup>
         <EditButton onClick={edithandle}>Edit</EditButton>

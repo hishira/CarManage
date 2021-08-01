@@ -20,9 +20,6 @@ const EditCarWrapper = styled(MainComponent)`
   }
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-`;
 const BackButton = styled(Button)`
   position: absolute;
   top: 0;
@@ -67,7 +64,7 @@ export function EditCar() {
   };
   useEffect(() => {
     fetchCarinfo();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
   const history = useHistory();
   const createNewCarHandle = async (e) => {
     e.preventDefault();

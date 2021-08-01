@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Message } from "../../shared/Message";
@@ -20,9 +20,6 @@ const NewCarWrapper = styled(MainComponent)`
   }
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-`;
 const BackButton = styled(Button)`
   position: absolute;
   top: 0;

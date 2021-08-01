@@ -7,7 +7,6 @@ export const MainComponent = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
-  border: 2px solid red;
 `;
 export const MainText = styled.p`
   font-size: 2.7rem;
@@ -24,14 +23,12 @@ export const MainText = styled.p`
     font-size: 3.3rem;
   }
   color: #14213d;
-  border: 2px solid red;
   width: 100%;
   text-align: center;
 `;
 export const InputComponent = styled.div`
   display: flex;
   width: 100%;
-  border: 2px solid red;
   justify-content: space-between;
   padding: .6rem 0rem ;
   @media (min-width: 900px){

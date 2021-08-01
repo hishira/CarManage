@@ -6,9 +6,6 @@ import { useHistory } from "react-router-dom";
 import {
   MainComponent,
   MainText,
-  InputComponent,
-  Label,
-  Input,
   Button,
   Spinner,
 } from "../../shared/CSSComponents";
@@ -18,22 +15,22 @@ import { LogOutHandle } from "../../utils/auth.utils";
 const CarsWrapper = styled(MainComponent)`
   width: 100%;
   position: relative;
-  
 `;
 
 const Cars = styled.div`
   width: 100%;
-  border: 2px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 const UserInfo = styled.div`
-  border: 2px solid green;
   width: 100%;
-  @media (min-width: 700px){
+  @media (min-width: 700px) {
     width: 50%;
+  }
+  @media (min-width: 1200px) {
+    width: 30%;
   }
   display: flex;
   flex-direction: column;
@@ -46,11 +43,26 @@ const LogoutButton = styled(Button)`
 const UserCars = styled.div`
   display: flex;
   width: 100%;
-  border: 2px solid green;
+  margin-top: .4rem;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-`
+`;
+const UserName = styled.div`
+  display: flex;
+  width: 100%;
+  @media (min-width: 500px) {
+    width: 80%;
+  }
+  justify-content: space-around;
+  & > * {
+    width: 50%;
+    &:last-child {
+      text-align: end;
+    }
+  }
+`;
+const UserEmail = styled(UserName)``;
 export function CarsComponent() {
   const [user, setuser] = useState({});
   const [cars, setCars] = useState([]);
@@ -86,7 +98,7 @@ export function CarsComponent() {
   };
   useEffect(() => {
     GetCars();
-  }, [reloadcars]);
+  }, [reloadcars]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const loguthandle = () => {
     LogOutHandle();
@@ -101,14 +113,18 @@ export function CarsComponent() {
             messagetext={messageoption.message}
           />
         ) : null}
-        <MainText>Yours cars</MainText>
+        <MainText>Your cars</MainText>
         {isLoading ? (
           <Spinner />
         ) : (
           <Cars>
             <UserInfo>
-              <div>Full name {user.fullname}</div>
-              <div>Email: {user.email}</div>
+              <UserName>
+                <div>Full name</div> <div>{user.fullname}</div>
+              </UserName>
+              <UserEmail>
+                <div>Email:</div> <div>{user.email}</div>
+              </UserEmail>
               <LogoutButton onClick={loguthandle}>Logout</LogoutButton>
             </UserInfo>
             <UserCars>

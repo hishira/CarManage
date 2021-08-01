@@ -20,7 +20,14 @@ const GetCars = async (accesstoken) => {
     });
   return { status: status, fetchobject: respobj };
 };
-
+const CheckUserActiveInfo = (response)=>{
+  if(response.status === 401){
+    DeleteTokens();
+    clearUserActivity();
+    return false;
+  }
+  return response;
+}
 export const GetUserCars = async () => {
   let token = GetAccessToken();
   let carresponse = await GetCars(token);
@@ -28,14 +35,8 @@ export const GetUserCars = async () => {
     await refreshToken();
     token = GetAccessToken();
     carresponse = await GetCars(token);
-    if (carresponse.status === 401) {
-      DeleteTokens();
-      clearUserActivity();
-      return false;
-    }
-    return carresponse;
   }
-  return carresponse;
+  return CheckUserActiveInfo(carresponse);
 };
 
 const CreateCar = async (token, newcar) => {
@@ -58,13 +59,8 @@ export const CreateNewCarHandle = async (newcar) => {
     await refreshToken();
     token = GetAccessToken();
     response = await CreateCar(token, newcar);
-    if (response.status === 401) {
-      DeleteTokens();
-      clearUserActivity();
-      return false;
-    }
   }
-  return response;
+  return CheckUserActiveInfo(response);
 };
 
 const DeleteCar = async (accesstoken, carid) => {
@@ -86,13 +82,8 @@ export const DeleteCarHandle = async (carid) => {
     await refreshToken();
     token = GetAccessToken();
     response = await DeleteCar(token, carid);
-    if (response.status === 401) {
-      DeleteTokens();
-      clearUserActivity();
-      return false;
-    }
   }
-  return response;
+  return CheckUserActiveInfo(response);
 };
 
 const GetCar = async (accesstoken, carid) => {
@@ -115,13 +106,8 @@ export const GetCarHandle = async (carid) => {
     await refreshToken();
     token = GetAccessToken();
     response = await GetCar(token, carid);
-    if (response.status === 401) {
-      DeleteTokens();
-      clearUserActivity();
-      return false;
-    }
   }
-  return response;
+  return CheckUserActiveInfo(response);
 };
 
 const UpdateCar = async (accesstoken, carid, updatedcar) => {
@@ -144,11 +130,6 @@ export const UpdateCarHandle = async (carid, updatedcar) => {
     await refreshToken();
     token = GetAccessToken();
     response = await UpdateCar(token, carid, updatedcar);
-    if (response.status === 401) {
-      DeleteTokens();
-      clearUserActivity();
-      return false;
-    }
   }
-  return response;
+  return CheckUserActiveInfo(response); 
 };

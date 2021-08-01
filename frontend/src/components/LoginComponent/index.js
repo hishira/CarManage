@@ -90,7 +90,7 @@ export default function LoginComponent() {
         <LoginForm onSubmit={sumbithandle}>
           <InputComponent>
             <Label>Email</Label>
-            <Input type="email" onChange={(e) => setemail(e.target.value)} />
+            <Input placeholder="example@example.com" type="email" onChange={(e) => setemail(e.target.value)} />
           </InputComponent>
           <InputComponent>
             <Label>Password</Label>

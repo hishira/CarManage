@@ -28,6 +28,9 @@ app.put(
   checkBearerTokenHeader,
   accessTokenCheck,
   valididcheck,
+  carintrodatevalid,
+  caryearvalid,
+  actualrun,
   CarController.Edit
 );
 app.delete(

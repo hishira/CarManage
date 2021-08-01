@@ -15,7 +15,6 @@ const ButtonGroup = styled.div`
   align-items: center;
   justify-content: center;
   padding: 3rem;
-  border: 2px solid red;
   width: 50%;
 `;
 const ButtonText = styled.p`
@@ -40,7 +39,6 @@ export default function StartComponent() {
   const history = useHistory();
   useEffect(() => {
     const item = JSON.parse(localStorage.getItem("useractive"));
-    console.log(item);
     if (item !== null) history.push("/cars");
   });
   return (

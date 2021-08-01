@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const ACCESSTOKENTIME = "180s"
-const REFRESHTOKENTIME = "1d"
+const REFRESHTOKENTIME = "300s"
 const { JWT_TOKEN_SECCRET } = require("./secret");
 function generateaccesstoken(user) {
     return jwt.sign({ userid: user._id, type: "ACCESS_TOKEN" }, JWT_TOKEN_SECCRET, {
