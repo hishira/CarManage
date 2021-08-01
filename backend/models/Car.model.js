@@ -9,15 +9,21 @@ const carSchema = new mongoose.Schema({
         required: true,
     },
     year: {
-        type: number,
+        type: Number,
         min: 1900,
+        required: true,
+        validate(value){
+            return value <= new Date(Date.now()).getFullYear()
+        }
     },
     companyintrodate: {
         type: Date,
+        required: true,
         default: Date.now(),
     },
     actualrun: {
-        type: number,
+        type: Number,
+        required: true,
         min: 0,
     },
     createdate: {
@@ -27,6 +33,10 @@ const carSchema = new mongoose.Schema({
     editdate: {
         type: Date,
         default: Date.now(),
+    },
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
     }
 })
 const Car = mongoose.model("Car",carSchema);
