@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha --timeout 10000 --exit",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "start:docker": "node app.js"
   },
   "author": "Michal Skorupa",
   "license": "ISC",
