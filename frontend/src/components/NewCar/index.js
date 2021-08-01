@@ -60,6 +60,7 @@ export function NewCar() {
     const response = await CreateNewCarHandle(newcar);
     if (response === false) {
       history.push("/");
+      return false;
     }
     if (response.status === 200) {
       messageOpen("success", "New car added");

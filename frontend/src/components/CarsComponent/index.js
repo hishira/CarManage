@@ -79,8 +79,10 @@ export function CarsComponent() {
     setLoading(true);
     const userresponse = await GetUserInfoHandle();
     const carresponse = await GetUserCars();
-    if (carresponse === false || userresponse === false) history.push("/");
-    console.log(carresponse);
+    if (carresponse === false || userresponse === false){
+      history.push("/");
+      return;
+    }
     if (carresponse.status === 200 && userresponse.status === 200) {
       setCars(carresponse.fetchobject);
       setuser(userresponse.fetchobject);
@@ -107,12 +109,11 @@ export function CarsComponent() {
   return (
     <MainComponent>
       <CarsWrapper>
-        {messageopen ? (
           <Message
             color={messageoption.color}
+            visible={messageopen}
             messagetext={messageoption.message}
           />
-        ) : null}
         <MainText>Your cars</MainText>
         {isLoading ? (
           <Spinner />

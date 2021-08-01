@@ -35,6 +35,7 @@ const Car = styled.div`
   width: 100%;
   border-radius: 5px;
   box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem lightslategray;
+  margin-top: .5rem;
   @media (min-width: 600px) {
     width: auto;
   }
@@ -51,11 +52,15 @@ const FirstInfo = styled.div``;
 const SecondInfo = styled.div``;
 export const CarComponent = ({ car, messagefunction, reloadcars }) => {
   const history = useHistory();
-  const deleteButtonHandle = async (carid) => {
+  const deleteButtonHandle = async () => {
     const response = await DeleteCarHandle(car._id);
+    if(response === false){
+      history.push("/")
+      return;
+    }
     if (response.status === 200) {
       messagefunction("success", response.fetchobject.message);
-      setTimeout(() => reloadcars(), 2000);
+      setTimeout(() => reloadcars(), 2001);
     } else {
       messagefunction("warning", response.fetchobject.message);
     }

@@ -51,6 +51,39 @@ describe("API tests", () => {
           done();
         });
     });
+    it("Cannot create user with password without special character", (done) => {
+      chai
+        .request(app)
+        .post("/auth/signup")
+        .send({
+          fullname: "Marian Paździoch",
+          password: "adsasdasd",
+          email: "mail@mail.com",
+        })
+        .end((err, res) => {
+          res.should.have.status(406);
+          res.body.should.be.an("object");
+          res.body.should.have.property("message");
+          done();
+        });
+    });
+    it("We cannot create account with to long email", (done) => {
+      chai
+        .request(app)
+        .post("/auth/signup")
+        .send({
+          fullname: "Marian Paździoch",
+          password: "123123#",
+          email:
+            "asdasdasdsdjaksdjaljsdklajsdklajsdkljaskl@aldjslkdajdklsjaskldjklsasdasdjakjsdjaksdjklasjdklasjdlkjasdlkjasdkljadklsjaksdjkasjdklasjdkljasdlasldajshdkjahsdkjashdkjahsdkljhakjsdhasdhkjashdkjahskdjhaskjdhasdjajsdhkjashdkjahskjdjasasdjhaskjdhakjsdhkjasdhkjashdkjashdkjahsd.com",
+        })
+        .end((err, res) => {
+          res.should.have.status(406);
+          res.body.should.be.an("object");
+          res.body.should.have.property("message");
+          done();
+        });
+    });
     it("Can create user if evrything is ok", (done) => {
       chai
         .request(app)
@@ -389,7 +422,7 @@ describe("API tests", () => {
             done();
           });
       });
-      it("We cannot edit car witch year less than 1900 ", (done) => {
+      it("We cannot edit car when year less than 1900 ", (done) => {
         chai
           .request(app)
           .put(`/car/edit/${car.carid}`)
@@ -406,7 +439,7 @@ describe("API tests", () => {
             done();
           });
       });
-      it("We cannot edit car witch year bigger than current ", (done) => {
+      it("We cannot edit car when year bigger than current ", (done) => {
         chai
           .request(app)
           .put(`/car/edit/${car.carid}`)
@@ -423,7 +456,7 @@ describe("API tests", () => {
             done();
           });
       });
-      it("We cannot edit car witch actual run less than 0", (done) => {
+      it("We cannot edit car when actual run less than 0", (done) => {
         chai
           .request(app)
           .put(`/car/edit/${car.carid}`)
@@ -446,20 +479,117 @@ describe("API tests", () => {
           .put(`/car/edit/${car.carid}`)
           .set({ Authorization: `Bearer ${token.accesstoken}` })
           .send({
+            producer: "Ford",
             model: "Mustang",
             year: 2012,
-            companyintrodate: "12-12-21",
+            companyintrodate: "05-05-21",
             actualrun: 123,
           })
           .end((err, res) => {
             res.should.have.status(200);
-            res.body.should.have.property("_id");
+            done();
+          });
+      });
+      it("Returned object should have producer property", (done) => {
+        chai
+          .request(app)
+          .put(`/car/edit/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .send({
+            producer: "Ford",
+            model: "Mustang",
+            year: 2012,
+            companyintrodate: "05-05-21",
+            actualrun: 4,
+          })
+          .end((err, res) => {
             res.body.should.have.property("producer");
+            done();
+          });
+      });
+      it("Returned object should have model property", (done) => {
+        chai
+          .request(app)
+          .put(`/car/edit/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .send({
+            producer: "Ford",
+            model: "Mustang",
+            year: 2012,
+            companyintrodate: "05-05-21",
+            actualrun: 5,
+          })
+          .end((err, res) => {
             res.body.should.have.property("model");
+            done();
+          });
+      });
+      it("Returned object should have actual run property", (done) => {
+        chai
+          .request(app)
+          .put(`/car/edit/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .send({
+            producer: "Ford",
+            model: "Mustang",
+            year: 2012,
+            companyintrodate: "05-05-21",
+            actualrun: 2,
+          })
+          .end((err, res) => {
             res.body.should.have.property("actualrun");
-            res.body.should.have.property("year");
+            done();
+          });
+      });
+      it("Returned object should have date property when was intro into company", (done) => {
+        chai
+          .request(app)
+          .put(`/car/edit/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .send({
+            producer: "Ford",
+            model: "Mustang",
+            year: 2012,
+            companyintrodate: "05-05-21",
+            actualrun: 3,
+          })
+          .end((err, res) => {
             res.body.should.have.property("companyintrodate");
             res.body.should.have.property("createdate");
+            res.body.should.have.property("editdate");
+            done();
+          });
+      });
+      it("Returned object should have create date property", (done) => {
+        chai
+          .request(app)
+          .put(`/car/edit/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .send({
+            producer: "Ford",
+            model: "Mustang",
+            year: 2012,
+            companyintrodate: "05-05-21",
+            actualrun: 4,
+          })
+          .end((err, res) => {
+            res.body.should.have.property("createdate");
+            done();
+          });
+      });
+      it("Returned object should have edit date property", (done) => {
+        chai
+          .request(app)
+          .put(`/car/edit/${car.carid}`)
+          .set({ Authorization: `Bearer ${token.accesstoken}` })
+          .send({
+            producer: "Ford",
+            model: "Mustang",
+            year: 2012,
+            companyintrodate: "05-05-21",
+            actualrun: 5,
+          })
+          .end((err, res) => {
             res.body.should.have.property("editdate");
             done();
           });
@@ -521,7 +651,7 @@ describe("API tests", () => {
           });
       });
     });
-    describe("Car get by user",()=>{
+    describe("Car get by user", () => {
       it("We cannot get cars if we are unauthorized", (done) => {
         chai
           .request(app)
@@ -565,7 +695,7 @@ describe("API tests", () => {
             done();
           });
       });
-    })
+    });
   });
   after(async () => {
     await userModel.deleteMany({});

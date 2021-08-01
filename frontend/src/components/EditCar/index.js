@@ -57,6 +57,10 @@ export function EditCar() {
   const fetchCarinfo = async () => {
     setloading("true");
     const response = await GetCarHandle(id);
+    if (response === false){
+      history.push("/");
+      return;
+    }
     if (response.status === 200) {
       setupdatecar(response.fetchobject);
     }
@@ -64,7 +68,7 @@ export function EditCar() {
   };
   useEffect(() => {
     fetchCarinfo();
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const history = useHistory();
   const createNewCarHandle = async (e) => {
     e.preventDefault();
@@ -72,6 +76,7 @@ export function EditCar() {
     const response = await UpdateCarHandle(id, updatecar);
     if (response === false) {
       history.push("/");
+      return;
     }
     if (response.status === 200) {
       messageOpen("success", "Update car info");
