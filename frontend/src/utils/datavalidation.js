@@ -19,7 +19,11 @@ export const passwordValidate = (password, messageOpen) => {
 export const emailvalidate = (email, messageOpen) => {
   let warningflag = true;
   if (email === "" || email === undefined) {
-    messageOpen("warning", "Enter password");
+    messageOpen("warning", "Enter email");
+    warningflag = false;
+  }
+  if (email.length > 255) {
+    messageOpen("warning", "Email to long, max 255 characters");
     warningflag = false;
   }
   return warningflag;

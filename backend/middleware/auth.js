@@ -22,10 +22,17 @@ function emailcheck(req, res, next) {
     return res.status(406).send({ message: "Enter email" });
   next();
 }
+function emailtolong(req,res,next){
+  if(req.body.email.length > 255){
+    return res.status(406).send({message: "Email is to long"})
+  }
+  next();
+}
 
 module.exports = {
   userpasswordcheck,
   emailcheck,
   userpasswordsequencecheck,
   specialcharacter,
+  emailtolong,
 };

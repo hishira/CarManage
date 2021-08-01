@@ -109,6 +109,7 @@ export default function SignUpComponent() {
               required
               type="email"
               placeholder="email"
+              maxLength="255"
               onChange={(e) => setemail(e.target.value)}
             />
           </InputComponent>

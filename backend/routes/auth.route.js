@@ -5,7 +5,8 @@ const {
   userpasswordcheck,
   emailcheck,
   userpasswordsequencecheck,
-  specialcharacter
+  specialcharacter,
+  emailtolong
 } = require("../middleware/auth");
 const {
   refreshtokenVerify,
@@ -16,6 +17,7 @@ const {
 app.post(
   "/signup",
   emailcheck,
+  emailtolong,
   userpasswordcheck,
   userpasswordsequencecheck,
   specialcharacter,
