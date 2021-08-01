@@ -7,8 +7,9 @@ const UserMessage = styled.div`
   z-index: 100;
   font-size: 1.1rem;
   border-radius: 10px;
+  display: ${(props) => (props.visible ? "block" : "none")};
 `;
-export function Message({ color, messagetext }) {
+export function Message({ color, messagetext, visible }) {
   const colordecipher = (color) => {
     return color === "warning"
       ? "#FFCCCC"
@@ -16,5 +17,9 @@ export function Message({ color, messagetext }) {
       ? "#42ba96"
       : "whitesmoke";
   };
-  return <UserMessage color={colordecipher(color)}>{messagetext}</UserMessage>;
+  return (
+    <UserMessage visible={visible} color={colordecipher(color)}>
+      {messagetext}
+    </UserMessage>
+  );
 }

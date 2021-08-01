@@ -30,12 +30,14 @@ class AuthController {
           else {
             if (obj.comparepasswords(req.body.password))
               tokenorerror = generateTokens(obj.toObject());
-            else tokenorerror = 401;
+            else tokenorerror = 403;
           }
         })
         .select("password");
+      if(tokenorerror === 403)
+        return res.status(406).send({ message: "Wrong email or password" });
       if (typeof tokenorerror === "number" || tokenorerror === undefined)
-        return res.status(406).send({ message: "User do not exists" });
+        return res.status(406).send({ message: "User with email not exist" });
       return res.status(200).json(tokenorerror);
     } catch (e) {
       return res.status(505).send({ message: SERVERERROR });

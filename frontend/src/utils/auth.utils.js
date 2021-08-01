@@ -1,5 +1,6 @@
 import { loginUser, signUpUser, tokenrefresh } from "../api/auth.api";
-import { GetRefreshToken, SetAccessToken } from "./cookies";
+import { GetRefreshToken, SetAccessToken, DeleteTokens } from "./cookies";
+import {clearUserActivity} from "./localstorage"
 export const loginuserHandle = async (emailpassobject) => {
   let status = null;
   const responseobject = await loginUser(emailpassobject).then((resp) => {
@@ -38,3 +39,8 @@ export const refreshToken = async () => {
   SetAccessToken(response.accessToken);
   return true;
 };
+
+export const LogOutHandle = async()=>{
+  DeleteTokens();
+  clearUserActivity();
+}

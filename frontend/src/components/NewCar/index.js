@@ -11,11 +11,12 @@ import {
   Input,
   Button,
 } from "../../shared/CSSComponents";
+import { NewCarValidation } from "../../utils/datavalidation";
 const NewCarWrapper = styled(MainComponent)`
   width: 100%;
   position: relative;
   @media (min-width: 500px) {
-    width: 50%;
+    width: 60%;
   }
 `;
 
@@ -36,6 +37,7 @@ const BackButton = styled(Button)`
 `;
 const NewCarForm = styled.form`
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -57,6 +59,7 @@ export function NewCar() {
   const createNewCarHandle = async (e) => {
     e.preventDefault();
     console.log(newcar);
+    if (!NewCarValidation(newcar, messageOpen)) return;
     const response = await CreateNewCarHandle(newcar);
     if (response === false) {
       history.push("/");
@@ -78,12 +81,12 @@ export function NewCar() {
   return (
     <MainComponent>
       <BackButton onClick={() => history.push("/cars")}>Back</BackButton>
-      {messageopen ? (
-        <Message
-          color={messageoption.color}
-          messagetext={messageoption.message}
-        />
-      ) : null}
+
+      <Message
+        visible={messageopen}
+        color={messageoption.color}
+        messagetext={messageoption.message}
+      />
       <NewCarWrapper>
         <MainText>Add new car</MainText>
         <NewCarForm onSubmit={createNewCarHandle}>

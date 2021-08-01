@@ -1,4 +1,10 @@
-import { getUserCars, addNewCar, carDelete, getCar, updateCar } from "../api/car.api";
+import {
+  getUserCars,
+  addNewCar,
+  carDelete,
+  getCar,
+  updateCar,
+} from "../api/car.api";
 import { GetAccessToken, DeleteTokens } from "./cookies";
 import { clearUserActivity } from "./localstorage";
 import { refreshToken } from "./auth.utils";
@@ -79,7 +85,7 @@ export const DeleteCarHandle = async (carid) => {
   if (response.status === 401) {
     await refreshToken();
     token = GetAccessToken();
-    response = await DeleteCar(token);
+    response = await DeleteCar(token, carid);
     if (response.status === 401) {
       DeleteTokens();
       clearUserActivity();

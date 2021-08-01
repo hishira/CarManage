@@ -5,6 +5,7 @@ const {
   userpasswordcheck,
   emailcheck,
   userpasswordsequencecheck,
+  specialcharacter
 } = require("../middleware/auth");
 const {
   refreshtokenVerify,
@@ -17,9 +18,10 @@ app.post(
   emailcheck,
   userpasswordcheck,
   userpasswordsequencecheck,
+  specialcharacter,
   AuthController.SignUp
 );
-app.post("/login", emailcheck, AuthController.Login);
+app.post("/login", emailcheck, userpasswordcheck, AuthController.Login);
 app.get(
   "/refreshtoken",
   checkheadAuthorization,

@@ -1,6 +1,11 @@
 const express = require("express");
 const CarController = require("../controllers/car.controller");
-const { valididcheck } = require("../middleware/car");
+const {
+  valididcheck,
+  carintrodatevalid,
+  caryearvalid,
+  actualrun,
+} = require("../middleware/car");
 const app = express();
 const {
   checkBearerTokenHeader,
@@ -12,6 +17,9 @@ app.post(
   checkheadAuthorization,
   checkBearerTokenHeader,
   accessTokenCheck,
+  carintrodatevalid,
+  caryearvalid,
+  actualrun,
   CarController.Create
 );
 app.put(

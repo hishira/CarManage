@@ -9,15 +9,22 @@ import {
   InputComponent,
   Label,
   Input,
+  Button,
 } from "../../shared/CSSComponents";
+import { Message } from "../../shared/Message";
 import { signupuserHandle } from "../../utils/auth.utils";
+import { passwordValidate, emailvalidate } from "../../utils/datavalidation";
 const WrappSigpUp = styled(MainComponent)`
   width: 100%;
   @media (min-width: 500px) {
-    width: 50%;
+    width: 70%;
+  }
+  @media (min-width: 900px) {
+    width: 40%;
   }
 `;
 const SignUpForm = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,12 +42,17 @@ const SignUpLink = styled.span`
   }
 `;
 
-const Button = styled.button``;
 export default function SignUpComponent() {
   const [fullname, setfullname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [messageopen, setmessageopen] = useState(false);
+  const [messageoption, setmessageoption] = useState({
+    color: "",
+    message: "",
+  });
   const history = useHistory();
+
   const sumbithandle = async (e) => {
     e.preventDefault();
     console.log(fullname, email, password);
@@ -49,17 +61,36 @@ export default function SignUpComponent() {
       email: email,
       password: password,
     };
+    if (!passwordValidate(password, messageOpen)) return;
+    if (!emailvalidate(email, messageOpen)) return;
     const signupinfo = await signupuserHandle(emailpassobject);
     if (signupinfo.status !== 200) {
       console.log(signupinfo.fetchinfo);
+      messageOpen("warning", signupinfo.fetchinfo.message);
     } else {
-      InsertNewTokens(signupinfo.fetchinfo);
-      setUserActivity();
-      history.push("/cars");
+      messageOpen("success", "Account create");
+      setTimeout(() => {
+        InsertNewTokens(signupinfo.fetchinfo);
+        setUserActivity();
+        history.push("/cars");
+      }, 2000);
     }
+  };
+
+  const messageOpen = (color, text) => {
+    setmessageoption({ color: color, message: text });
+    setmessageopen(true);
+    setTimeout(() => {
+      setmessageopen(false);
+    }, 2000);
   };
   return (
     <MainComponent>
+      <Message
+        visible={messageopen}
+        color={messageoption.color}
+        messagetext={messageoption.message}
+      />
       <WrappSigpUp>
         <MainText>Sign Up</MainText>
         <SignUpForm onSubmit={sumbithandle}>

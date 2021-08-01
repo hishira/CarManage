@@ -57,7 +57,7 @@ describe("API tests", () => {
         .post("/auth/signup")
         .send({
           fullname: "Marian Paździoch",
-          password: "123d123",
+          password: "123d123#",
           email: "mail@mail.com",
         })
         .end((err, res) => {
@@ -81,7 +81,7 @@ describe("API tests", () => {
       chai
         .request(app)
         .post("/auth/login")
-        .send({ email: "mail@mail.com", password: "123d123" })
+        .send({ email: "mail@mail.com", password: "123d123#" })
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("accessToken");

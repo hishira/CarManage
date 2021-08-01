@@ -31,9 +31,36 @@ export const MainText = styled.p`
 export const InputComponent = styled.div`
   display: flex;
   width: 100%;
+  border: 2px solid red;
+  justify-content: space-between;
+  padding: .6rem 0rem ;
+  @media (min-width: 900px){
+    width: 70%;
+    padding: .6rem;
+  }
 `;
-export const Label = styled.label``;
-export const Input = styled.input``;
+export const Label = styled.label`
+  padding: .3rem;
+  @media (min-width: 900px){
+    width: 40%;
+  }
+`;
+export const Input = styled.input`
+  border-radius: 10px;
+  border: .01rem solid lightslategray;
+  padding-left: .5rem;
+  background-color: whitesmoke;
+  &:focus{
+    outline: none;
+    border: .2rem solid grey;
+    border-radius: 10px;
+    background-color: white;
+  }
+  @media (min-width: 900px){
+    width: 60%;
+  }
+  
+`;
 export const Button = styled.button`
   padding: 1rem 1.5rem;
   border-radius: 10px;

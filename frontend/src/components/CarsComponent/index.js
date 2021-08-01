@@ -10,22 +10,47 @@ import {
   Label,
   Input,
   Button,
-  Spinner
+  Spinner,
 } from "../../shared/CSSComponents";
 import { Message } from "../../shared/Message";
 import { CarComponent } from "./CarComponent";
+import { LogOutHandle } from "../../utils/auth.utils";
 const CarsWrapper = styled(MainComponent)`
   width: 100%;
   position: relative;
-  @media (min-width: 500px) {
-    width: 50%;
-  }
+  
 `;
 
-
-const Cars = styled.div``;
-const UserInfo = styled.div``;
-
+const Cars = styled.div`
+  width: 100%;
+  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const UserInfo = styled.div`
+  border: 2px solid green;
+  width: 100%;
+  @media (min-width: 700px){
+    width: 50%;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const LogoutButton = styled(Button)`
+  padding: 0.5rem;
+`;
+const UserCars = styled.div`
+  display: flex;
+  width: 100%;
+  border: 2px solid green;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+`
 export function CarsComponent() {
   const [user, setuser] = useState({});
   const [cars, setCars] = useState([]);
@@ -62,6 +87,11 @@ export function CarsComponent() {
   useEffect(() => {
     GetCars();
   }, [reloadcars]);
+
+  const loguthandle = () => {
+    LogOutHandle();
+    history.push("/");
+  };
   return (
     <MainComponent>
       <CarsWrapper>
@@ -77,17 +107,20 @@ export function CarsComponent() {
         ) : (
           <Cars>
             <UserInfo>
-              <div>{user.fullname}</div>
-              <div>{user.email}</div>
+              <div>Full name {user.fullname}</div>
+              <div>Email: {user.email}</div>
+              <LogoutButton onClick={loguthandle}>Logout</LogoutButton>
             </UserInfo>
-            {cars.map((car) => (
-              <CarComponent
-                key={car._id}
-                car={car}
-                messagefunction={messageOpen}
-                reloadcars={reloadCar}
-              />
-            ))}
+            <UserCars>
+              {cars.map((car) => (
+                <CarComponent
+                  key={car._id}
+                  car={car}
+                  messagefunction={messageOpen}
+                  reloadcars={reloadCar}
+                />
+              ))}
+            </UserCars>
             <Button onClick={() => history.push("/newcar")}>Add new car</Button>
           </Cars>
         )}

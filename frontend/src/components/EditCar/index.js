@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
 import { Message } from "../../shared/Message";
-import { GetCarHandle, UpdateCarHandle} from "../../utils/car.util";
+import { GetCarHandle, UpdateCarHandle } from "../../utils/car.util";
 import {
   MainComponent,
   MainText,
@@ -16,7 +16,7 @@ const EditCarWrapper = styled(MainComponent)`
   width: 100%;
   position: relative;
   @media (min-width: 500px) {
-    width: 50%;
+    width: 60%;
   }
 `;
 
@@ -37,12 +37,13 @@ const BackButton = styled(Button)`
 `;
 const EditCarForm = styled.form`
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 export function EditCar() {
-    const {id} = useParams();
+  const { id } = useParams();
   const [updatecar, setupdatecar] = useState({
     producer: "",
     model: "",
@@ -50,7 +51,7 @@ export function EditCar() {
     companyintrodate: Date.now(),
     actualrun: 0,
   });
-  const [messageopen, setmessageopen] = useState("false");
+  const [messageopen, setmessageopen] = useState(false);
   const [messageoption, setmessageoption] = useState({
     color: "",
     message: "",
@@ -58,20 +59,20 @@ export function EditCar() {
   const [loading, setloading] = useState("false");
   const fetchCarinfo = async () => {
     setloading("true");
-    const response = await GetCarHandle(id)
-    if(response.status === 200){
-        setupdatecar(response.fetchobject)
+    const response = await GetCarHandle(id);
+    if (response.status === 200) {
+      setupdatecar(response.fetchobject);
     }
     setloading("false");
   };
-  useEffect(()=>{
+  useEffect(() => {
     fetchCarinfo();
-  },[])
+  }, []);
   const history = useHistory();
   const createNewCarHandle = async (e) => {
     e.preventDefault();
     console.log(updatecar);
-    const response = await UpdateCarHandle(id,updatecar)
+    const response = await UpdateCarHandle(id, updatecar);
     if (response === false) {
       history.push("/");
     }
@@ -92,12 +93,11 @@ export function EditCar() {
   return (
     <MainComponent>
       <BackButton onClick={() => history.push("/cars")}>Back</BackButton>
-      {messageopen ? (
-        <Message
-          color={messageoption.color}
-          messagetext={messageoption.message}
-        />
-      ) : null}
+      <Message
+        visible={messageopen}
+        color={messageoption.color}
+        messagetext={messageoption.message}
+      />
       {loading === "true" ? (
         <Spinner />
       ) : (
@@ -111,7 +111,7 @@ export function EditCar() {
                 required
                 value={updatecar.producer}
                 onChange={(e) =>
-                    setupdatecar({ ...updatecar, producer: e.target.value })
+                  setupdatecar({ ...updatecar, producer: e.target.value })
                 }
               />
             </InputComponent>
@@ -122,7 +122,7 @@ export function EditCar() {
                 required
                 value={updatecar.model}
                 onChange={(e) =>
-                    setupdatecar({ ...updatecar, model: e.target.value })
+                  setupdatecar({ ...updatecar, model: e.target.value })
                 }
               />
             </InputComponent>
@@ -135,7 +135,7 @@ export function EditCar() {
                 value={updatecar.year}
                 max={new Date(Date.now()).getFullYear()}
                 onChange={(e) =>
-                    setupdatecar({ ...updatecar, year: e.target.value })
+                  setupdatecar({ ...updatecar, year: e.target.value })
                 }
               />
             </InputComponent>
@@ -144,7 +144,7 @@ export function EditCar() {
               <Input
                 type="date"
                 onChange={(e) =>
-                    setupdatecar({
+                  setupdatecar({
                     ...updatecar,
                     companyintrodate: e.target.value,
                   })
@@ -159,7 +159,7 @@ export function EditCar() {
                 required
                 value={updatecar.actualrun}
                 onChange={(e) =>
-                    setupdatecar({ ...updatecar, actualrun: e.target.value })
+                  setupdatecar({ ...updatecar, actualrun: e.target.value })
                 }
               />
             </InputComponent>
