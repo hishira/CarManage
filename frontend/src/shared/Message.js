@@ -18,7 +18,7 @@ export function Message({ color, messagetext, visible }) {
       : "whitesmoke";
   };
   return (
-    <UserMessage visible={visible} color={colordecipher(color)}>
+    <UserMessage data-tetsid="Message_container" visible={visible} color={colordecipher(color)}>
       {messagetext}
     </UserMessage>
   );
