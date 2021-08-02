@@ -1,4 +1,7 @@
 describe("Login page test", () => {
+  before(async () => {
+    await cy.adduser();
+  });
   beforeEach(() => {
     cy.visit("http://localhost:3000/login");
     cy.clearCookies();
@@ -50,7 +53,7 @@ describe("Login page test", () => {
       .should("contain.text", "Wrong email or password");
   });
   it("After successfull login user doesn't see any message", () => {
-    cy.get("input").eq(0).type("c@c.com");
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123456#");
     cy.get("button").click();
     cy.get(`[data-tetsid="Message_container"]`).should("have.length", 1);
@@ -62,14 +65,14 @@ describe("Login page test", () => {
     cy.getCookies().should("have.length", 0);
   });
   it("After successfull login cookie will be set", () => {
-    cy.get("input").eq(0).type("c@c.com");
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123456#");
     cy.get("button").click();
     cy.wait(2000);
     cy.getCookies().should("have.length", 2);
   });
   it("After successfull login cookie will have access token", () => {
-    cy.get("input").eq(0).type("c@c.com");
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123456#");
     cy.get("button").click();
     cy.wait(2000);
@@ -79,7 +82,7 @@ describe("Login page test", () => {
     });
   });
   it("After successfull login cookie will have refresh token", () => {
-    cy.get("input").eq(0).type("c@c.com");
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123456#");
     cy.get("button").click();
     cy.wait(2000);
@@ -91,11 +94,14 @@ describe("Login page test", () => {
     expect(localStorage.getItem("useractive")).to.be.null;
   });
   it("After successfull login localstorage should be set", () => {
-    cy.get("input").eq(0).type("c@c.com");
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123456#");
     cy.get("button").click();
     cy.wait(2000).should(() => {
       expect(localStorage.getItem("useractive")).to.be.eq("true");
     });
+  });
+  after(async () => {
+    await cy.removeuser();
   });
 });

@@ -129,4 +129,7 @@ describe("Signup page test", () => {
       expect(localStorage.getItem("useractive")).to.be.eq("true");
     });
   });
+  after(async () => {
+    await cy.removeuser();
+  });
 });

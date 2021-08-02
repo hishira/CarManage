@@ -1,7 +1,12 @@
 describe("User car test", () => {
+  before(async () => {
+    await cy.adduser();
+  });
   beforeEach(() => {
     cy.visit("http://localhost:3000/login");
-    cy.get("input").eq(0).type("c@c.com");
+    cy.get("input").eq(0).clear();
+    cy.get("input").eq(1).clear();
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123456#");
     cy.get("button").click();
     cy.wait(2000);
@@ -31,4 +36,7 @@ describe("User car test", () => {
     cy.get("button").eq(-1).click();
     cy.get("p").eq(0).should("contain.text", "Add new car")
 })
+after(async () => {
+  await cy.removeuser();
+});
 });
