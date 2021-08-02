@@ -1,4 +1,4 @@
-import { UserInfo } from "../api/user.api";
+import { UserInfo, DeleteUser, UserWithCar } from "../api/user.api";
 import { GetAccessToken, DeleteTokens } from "./cookies";
 import { clearUserActivity } from "./localstorage";
 import { refreshToken } from "./auth.utils";
@@ -26,3 +26,25 @@ export const GetUserInfoHandle = async () => {
   }
   return response;
 };
+
+export const Delete = async(body)=>{
+  let status = null;
+  const respobje = await DeleteUser(body).then((resp) => {
+    status = resp.status;
+    return resp.json();
+  });
+  return { status: status, fetchobject: respobje };
+}
+
+export const  NewUserWithCar = async(body) =>{
+  let status = null;
+  const responseobject = await UserWithCar(body)
+    .then((resp) => {
+      status = resp.status;
+      return resp.json();
+    })
+    .catch((e) => {
+      status = 505;
+    });
+  return { status: status, fetchinfo: responseobject };
+}

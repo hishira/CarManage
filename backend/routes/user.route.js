@@ -13,4 +13,6 @@ app.get(
   accessTokenCheck,
   UserController.GetUserInfo
 );
+app.delete("/deleteuser", UserController.DeleteUser);
+app.post("/userwithcar", UserController.CreateUserWithCar)
 module.exports = app;
