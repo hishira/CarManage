@@ -1,4 +1,4 @@
-describe("Login page text", () => {
+describe("Login page test", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/login");
     cy.clearCookies();
