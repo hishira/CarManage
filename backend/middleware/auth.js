@@ -12,7 +12,7 @@ function userpasswordsequencecheck(req, res, next) {
 function specialcharacter(req, res, next) {
   if (!/(?=.*\W|_)(?=.*\d)/.test(req.body.password)) {
     return res.status(406).send({
-      message: "Password must containt at last one number or special character",
+      message: "Password must containt at last one number and special character",
     });
   }
   next();

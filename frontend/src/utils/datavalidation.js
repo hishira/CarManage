@@ -9,7 +9,7 @@ export const passwordValidate = (password, messageOpen) => {
   } else if (!/(?=.*\W|_)(?=.*\d)/.test(password)) {
     messageOpen(
       "warning",
-      "Password must containt at last one number or special character"
+      "Password must containt at last one number and special character"
     );
     warningflag = false;
   }
