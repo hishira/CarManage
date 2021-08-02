@@ -1,4 +1,7 @@
 describe("Signup page test", () => {
+  before(async () => {
+    await cy.adduser();
+  });
   beforeEach(() => {
     cy.visit("http://localhost:3000/signup");
     cy.clearCookies();
@@ -67,7 +70,7 @@ describe("Signup page test", () => {
   });
   it("Cannot create user with email that exists in database", () => {
     cy.get("input").eq(0).type("Jan Kowalski");
-    cy.get("input").eq(1).type("c@c.com");
+    cy.get("input").eq(1).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(2).type("123123#");
     cy.get("button").click();
     cy.get(`[data-tetsid="Message_container"]`).should("have.length", 1);
@@ -81,7 +84,7 @@ describe("Signup page test", () => {
   it("Before sign up localstorage should be empty", () => {
     expect(localStorage.getItem("useractive")).to.be.null;
   });
-  it("After successfull sign up user see any success message", () => {
+  it("After successfull signup cookie will be set", () => {
     cy.get("input").eq(0).type("Jan Kowalski");
     cy.get("input").eq(1).type("ko@ko.com");
     cy.get("input").eq(2).type("123456#");
@@ -90,46 +93,14 @@ describe("Signup page test", () => {
     cy.get(`[data-tetsid="Message_container"]`)
       .eq(0)
       .should("have.css", "display", "block");
-  });
-  it("After successfull signup cookie will be set", () => {
-    cy.get("input").eq(0).type("Jan Kowalski");
-    cy.get("input").eq(1).type("ko@ko.com");
-    cy.get("input").eq(2).type("123456#");
-    cy.get("button").click();
-    cy.wait(2000);
-    cy.getCookies().should("have.length", 2);
-  });
-  it("After successfull sign up cookie will have access token", () => {
-    cy.get("input").eq(0).type("Jan Kowalski");
-    cy.get("input").eq(1).type("ko@ko.com");
-    cy.get("input").eq(2).type("123456#");
-    cy.get("button").click();
-    cy.wait(2000);
+    cy.wait(4000);
     cy.getCookies().should("have.length", 2);
     cy.getCookies().then((cookies) => {
       expect(cookies[0]).to.have.property("name").eq("accessToken");
     });
   });
-  it("After successfull sign up cookie will have refresh token", () => {
-    cy.get("input").eq(0).type("Jan Kowalski");
-    cy.get("input").eq(1).type("ko@ko.com");
-    cy.get("input").eq(2).type("123456#");
-    cy.get("button").click();
-    cy.wait(2000);
-    cy.getCookies().then((cookies) => {
-      expect(cookies[1]).to.have.property("name").eq("refreshToken");
-    });
-  });
-  it("After successfull login localstorage should be set", () => {
-    cy.get("input").eq(0).type("Jan Kowalski");
-    cy.get("input").eq(1).type("ko@ko.com");
-    cy.get("input").eq(2).type("123456#");
-    cy.get("button").click();
-    cy.wait(2000).should(() => {
-      expect(localStorage.getItem("useractive")).to.be.eq("true");
-    });
-  });
   after(async () => {
     await cy.removeuser();
+    await cy.removefromsign();
   });
 });

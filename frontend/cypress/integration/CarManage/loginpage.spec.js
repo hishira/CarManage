@@ -45,7 +45,7 @@ describe("Login page test", () => {
       .should("have.css", "display", "block");
   });
   it("Message contain", () => {
-    cy.get("input").eq(0).type("123@123.com");
+    cy.get("input").eq(0).type("uniwersalnytest@uniwersalnytest.com");
     cy.get("input").eq(1).type("123123");
     cy.get("button").click();
     cy.get(`[data-tetsid="Message_container"]`)
