@@ -51,6 +51,18 @@ const deleteFetchObjectWithAuth = (token) => {
     },
   };
 };
+const deleteFetchObject = (body) => {
+  return {
+    mode: "cors",
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+    },
+    body: JSON.stringify(body),
+  };
+};
 const postFetchObject = (object) => {
   return {
     mode: "cors",
@@ -71,4 +83,5 @@ export {
   putFetchObjectWithAuth,
   deleteFetchObjectWithAuth,
   postFetchObject,
+  deleteFetchObject
 };
